@@ -28,6 +28,10 @@ npm run public:check
 
 Playwright uses an isolated local port3100. Install Chromium if unavailable with `npx playwright install chromium`. Screenshots and browser traces stay ignored under `docs/screenshots/` and `test-results/`. `npm run test:e2e:production` runs the same suite against the built production server after `npm run build`.
 
+## Optional local live testing
+
+Developers can use their own YouCam account in a separate loopback-only development companion. Follow [LOCAL_LIVE_SETUP.md](LOCAL_LIVE_SETUP.md) for explicit activation, consent, credits and the durable one-attempt allowance. This never enables public Scan Studio or changes the verified public baseline.
+
 ## What works
 
 - Skin Atlas: four fictional historical readings, selectable signals, charts and accessible data tables.
@@ -38,6 +42,10 @@ Playwright uses an isolated local port3100. Install Chromium if unavailable with
 - Verified baseline: actual saved four-metric provider output in a separate read-only view, with no face image or provider identifier.
 
 Notebook persistence is per browser and origin using IndexedDB. No account sync, cloud storage, advertising, affiliate catalog or additional AI API is used. The app is not medical advice and does not establish product efficacy.
+
+## Optional listening
+
+The miniature **Morning Stillness** cassette plays the original user-supplied composition once at an initial 15% volume. Browser-blocked autoplay offers a direct tap-to-play fallback. Pause preserves your place. Previously saved sound-off preferences remain respected. OS and saved reduced motion stop the reels without disabling chosen audio. [Playback behavior and validation](docs/MORNING_STILLNESS.md).
 
 ## Repository and privacy
 

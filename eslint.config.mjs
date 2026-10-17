@@ -4,6 +4,7 @@ export default ts.config(
   {
     ignores: [
       ".next/**",
+      ".private/**",
       "test-results/**",
       "playwright-report/**",
       "next-env.d.ts",

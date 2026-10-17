@@ -2351,3 +2351,329 @@ html[data-motion="reduced"] .text-link svg {
     flex-direction: column;
   }
 }
+
+/* Morning Stillness: one shared controller, quiet controls in navigation flow. */
+.cassette-player {
+  --cassette-width: 124px;
+  position: relative;
+  flex-shrink: 0;
+  width: var(--cassette-width);
+  color: var(--teal);
+  padding: 6px 0;
+}
+.cassette-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cassette-toggle {
+  position: relative;
+  display: block;
+  width: 124px;
+  height: 62px;
+  padding: 0;
+  background: transparent;
+  border-radius: 5px;
+  color: var(--teal);
+}
+.cassette-art {
+  display: block;
+  width: 124px;
+  height: 63px;
+}
+.cassette-case {
+  fill: #e4ebde;
+  stroke: #829d87;
+  stroke-width: 0.8;
+}
+.cassette-label {
+  fill: #f7f5f0;
+  stroke: #b6c4af;
+  stroke-width: 0.5;
+}
+.cassette-art text {
+  fill: var(--teal);
+  font-family: Georgia, serif;
+  font-size: 8.5px;
+  letter-spacing: 0.2px;
+}
+.cassette-tape {
+  stroke: #95a590;
+  stroke-width: 4;
+}
+.cassette-reel {
+  fill: #f7f5f0;
+  stroke: var(--teal);
+  stroke-width: 0.8;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.cassette-base {
+  fill: none;
+  stroke: #829d87;
+  stroke-width: 0.8;
+}
+.cassette-art > circle {
+  fill: #829d87;
+}
+.cassette-transport {
+  position: absolute;
+  bottom: 7px;
+  left: 58px;
+  display: flex;
+}
+.cassette-off {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  min-height: 44px;
+  padding: 3px;
+  background: transparent;
+  color: var(--teal);
+  font-size: 8px;
+  white-space: nowrap;
+  border-radius: 3px;
+}
+.cassette-toggle:disabled {
+  opacity: 0.65;
+}
+.cassette-note {
+  width: var(--cassette-width);
+  display: block;
+  min-height: 16px;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.cassette-tooltip {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  right: 0;
+  width: 230px;
+  padding: 8px 10px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.5;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.cassette-player:focus-within .cassette-tooltip,
+.cassette-player:hover .cassette-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+.site-header > .cassette-player {
+  margin-left: 22px;
+}
+.sidebar > .cassette-player {
+  align-self: center;
+  margin-top: 20px;
+}
+.sidebar:has(> .cassette-player) .sidebar-label {
+  margin-top: 24px;
+}
+@keyframes cassette-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-motion="full"]
+    .cassette-player[data-playback="playing"]
+    .cassette-reel {
+    animation: cassette-turn 4s linear infinite;
+  }
+  .cassette-toggle,
+  .cassette-off {
+    transition:
+      background-color 180ms,
+      border-color 180ms;
+  }
+  .cassette-toggle:is(:hover, :focus-visible):not(:disabled) .cassette-case {
+    fill: #d8e4d2;
+  }
+  .cassette-off:is(:hover, :focus-visible):not(:disabled) {
+    background: var(--celadon);
+  }
+  .cassette-tooltip {
+    transition: opacity 180ms;
+  }
+}
+@media (min-width: 601px) and (max-width: 1100px) {
+  .cassette-player {
+    --cassette-width: 100px;
+    width: var(--cassette-width);
+  }
+  .cassette-toggle,
+  .cassette-art {
+    width: 100px;
+  }
+  .cassette-transport {
+    left: 46px;
+  }
+  .cassette-controls {
+    gap: 4px;
+  }
+  .cassette-note {
+    font-size: 9px;
+  }
+  .site-header nav {
+    gap: 18px;
+    margin-right: 20px;
+  }
+}
+@media (max-width: 800px) {
+  .site-header:has(> .cassette-player) {
+    height: auto;
+    min-height: 80px;
+    flex-wrap: wrap;
+    padding-top: 16px;
+    padding-bottom: 12px;
+    gap: 10px;
+  }
+  .site-header > .cassette-player {
+    margin-left: auto;
+  }
+  .site-header nav {
+    margin-right: 0;
+  }
+}
+@media (max-width: 600px) {
+  .site-header > .cassette-player {
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+  }
+  .site-header .button {
+    max-width: 132px;
+  }
+  .sidebar:has(> .cassette-player) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: 8px;
+  }
+  .sidebar > .cassette-player {
+    --cassette-width: 100px;
+    margin: 0;
+    width: var(--cassette-width);
+    justify-self: end;
+  }
+  .sidebar .cassette-toggle,
+  .sidebar .cassette-art {
+    width: 100px;
+  }
+  .sidebar .cassette-transport {
+    left: 46px;
+  }
+  .sidebar .cassette-controls {
+    gap: 4px;
+  }
+  .sidebar .cassette-note {
+    font-size: 9px;
+  }
+  .sidebar nav {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 350px) {
+  .sidebar > .cassette-player {
+    --cassette-width: 86px;
+    width: var(--cassette-width);
+  }
+  .sidebar .cassette-toggle,
+  .sidebar .cassette-art {
+    width: 86px;
+  }
+  .sidebar .cassette-transport {
+    left: 39px;
+  }
+  .sidebar .brand {
+    font-size: 23px;
+    gap: 7px;
+  }
+  .sidebar .brand svg {
+    width: 24px;
+  }
+  .sidebar .cassette-note {
+    font-size: 8px;
+  }
+}
+.sidebar .cassette-tooltip {
+  right: auto;
+  left: 0;
+  max-width: calc(100vw - 36px);
+}
+.sidebar .cassette-tooltip {
+  width: 180px;
+}
+@media (max-width: 600px) {
+  .sidebar .cassette-tooltip {
+    left: auto;
+    right: 0;
+    width: 230px;
+  }
+}
+html[data-document-visible="false"] .cassette-reel {
+  animation-play-state: paused !important;
+}
+@media (max-width: 600px) {
+  .site-header:has(> .cassette-player) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 8px;
+  }
+  .site-header:has(> .cassette-player) .brand {
+    font-size: 25px;
+    gap: 7px;
+  }
+  .site-header:has(> .cassette-player) .brand svg {
+    width: 24px;
+  }
+  .site-header:has(> .cassette-player) > .button {
+    max-width: 128px;
+  }
+  .site-header > .cassette-player {
+    grid-column: 1/-1;
+    width: var(--cassette-width);
+    justify-self: end;
+  }
+}
+.cassette-off {
+  min-width: 44px;
+}
+@media (max-width: 350px) {
+  .sidebar .cassette-controls {
+    gap: 0;
+  }
+}
+
+/* Keep the notebook cassette compact, just left of the sidebar center. */
+@media (min-width: 601px) {
+  .sidebar > .cassette-player {
+    --cassette-width: 100px;
+    margin-right: 24px;
+  }
+  .sidebar .cassette-toggle,
+  .sidebar .cassette-art {
+    width: 100px;
+    height: 51px;
+  }
+  .sidebar .cassette-transport {
+    left: 46px;
+    bottom: 6px;
+  }
+}

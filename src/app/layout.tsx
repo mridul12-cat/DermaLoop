@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { MusicProvider } from "@/components/music-player";
 import MotionPreferences from "@/components/motion-preferences";
 export const metadata: Metadata = {
   title: "DermaLoop — Change less, choose better.",
@@ -18,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <MotionPreferences />
-        {children}
+        <MusicProvider>{children}</MusicProvider>
       </body>
     </html>
   );

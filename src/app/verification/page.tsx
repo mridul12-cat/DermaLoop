@@ -1,3 +1,4 @@
+import CassettePlayer from "@/components/music-player";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, ShieldCheck } from "lucide-react";
 import { Brand } from "@/components/brand";
@@ -23,6 +24,7 @@ export default function Verification() {
         <Link className="button small" href="/app?sample=1">
           Explore the sample <ArrowRight size={16} />
         </Link>
+        <CassettePlayer />
       </header>
       <main className="verification-page">
         <div className="eyebrow">

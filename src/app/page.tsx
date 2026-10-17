@@ -1,3 +1,4 @@
+import CassettePlayer from "@/components/music-player";
 import Link from "next/link";
 import { Brand, Face } from "@/components/brand";
 import {
@@ -22,6 +23,7 @@ export default function Home() {
         <Link className="button small" href="/verification">
           Verified integration <ArrowUpRight size={16} />
         </Link>
+        <CassettePlayer />
       </header>
       <main>
         <section className="hero">

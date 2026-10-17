@@ -60,6 +60,11 @@ test("full fictional journey with evidence, observations, export content and act
     .getByLabel("Add a dated observation")
     .fill("Fictional observation: photographed in the same room.");
   await experiment.getByRole("button", { name: "Save observation" }).click();
+  await expect(
+    page
+      .getByRole("status")
+      .filter({ hasText: "Observation saved in this browser." }),
+  ).toBeVisible();
   await expect(experiment).toContainText(
     "Fictional observation: photographed in the same room.",
   );

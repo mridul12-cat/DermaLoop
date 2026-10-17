@@ -65,7 +65,8 @@ test("ambient motion is isolated to decorative orbits and pauses off screen", as
     await page.evaluate(
       () =>
         document
-          .getAnimations()
+          .querySelector(".hero-art")!
+          .getAnimations({ subtree: true })
           .filter((a) => a.effect?.getTiming().iterations === Infinity).length,
     ),
   ).toBe(1);
@@ -283,17 +284,15 @@ test("entrances and metric changes remain stable under mobile CPU throttling", a
   );
   expect(metricChange).toBeLessThan(0.01);
   expect(errors).toEqual([]);
-  await test
-    .info()
-    .attach("local-layout-stability", {
-      body: JSON.stringify({
-        cpuThrottle: 4,
-        width: 375,
-        landing,
-        metricChange,
-      }),
-      contentType: "application/json",
-    });
+  await test.info().attach("local-layout-stability", {
+    body: JSON.stringify({
+      cpuThrottle: 4,
+      width: 375,
+      landing,
+      metricChange,
+    }),
+    contentType: "application/json",
+  });
 });
 
 test("public editorial content and genuine table stay visible without JavaScript", async ({

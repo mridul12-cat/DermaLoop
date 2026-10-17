@@ -17,7 +17,8 @@
     "youcam:controlled": "node --conditions=react-server --import tsx scripts/youcam-controlled-once.ts",
     "youcam:phase3f": "node --conditions=react-server --import tsx scripts/youcam-phase3f-once.ts",
     "public:check": "node scripts/public-check.mjs",
-    "test:e2e:production": "PLAYWRIGHT_PRODUCTION=1 playwright test"
+    "test:e2e:production": "PLAYWRIGHT_PRODUCTION=1 playwright test",
+    "local:live": "node --conditions=react-server --import tsx scripts/local-live-dev.ts"
   },
   "dependencies": {
     "idb": "8.0.4",

@@ -19,6 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { Brand, Face, Mark } from "./brand";
+import CassettePlayer from "./music-player";
 import { ScoreValue } from "./motion-preferences";
 import { PUBLIC_PROVIDER_ACCESS } from "@/lib/public-demo";
 import {
@@ -304,6 +305,7 @@ export default function WorkspaceApp({
         <Link href="/" aria-label="DermaLoop home">
           <Brand />
         </Link>
+        <CassettePlayer />
         <div className="sidebar-label">YOUR SKIN NOTEBOOK</div>
         <nav>
           {tabs.map((t) => (

@@ -19,3 +19,6 @@ scripts
 *.heic
 *.pem
 *.key
+
+src/local-live
+LOCAL_LIVE_SETUP.md

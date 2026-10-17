@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>DermaLoop · Local operator notebook</title>
+    <link rel="stylesheet" href="/app.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <a href="/" aria-label="DermaLoop local home">◎ dermaloop</a
+      ><span>LOCAL DEVELOPMENT ONLY · LOOPBACK</span>
+    </header>
+    <main>
+      <p class="eyebrow">A PRIVATE CONNECTION / YOUR OWN API KEY</p>
+      <h1>One reading.<br /><em>A considered beginning.</em></h1>
+      <p class="lead">
+        A genuine YouCam Skin Analysis V2.1 test on this computer. Four SD
+        concerns: acne, pore, texture and redness. Public DermaLoop scans remain
+        disabled.
+      </p>
+      <div class="grid">
+        <section class="panel">
+          <h2>Before you begin.</h2>
+          <p>
+            Use one frontal, clearly lit adult face. Keep forehead, chin and
+            outline visible; the face should fill most of the frame. JPEG or PNG
+            only, 480px minimum short side, 2560px maximum long side, at most
+            3.5MB. No filters.
+          </p>
+          <form id="scan">
+            <label
+              >Image provenance<select id="provenance">
+                <option value="real_adult">My own adult image</option>
+                <option value="synthetic_test_image">
+                  Synthetic adult test image
+                </option>
+              </select></label
+            ><label
+              >Choose one suitable image<input
+                id="image"
+                type="file"
+                accept="image/jpeg,image/png"
+                required /></label
+            ><img
+              id="preview"
+              alt="Selected image, held in browser memory"
+              hidden
+            />
+            <p id="image-context"></p>
+            <label class="check"
+              ><input id="consent" type="checkbox" required /><span
+                id="consent-copy"
+                >I am an adult, own this image and consent to sending it to
+                Perfect Corp / YouCam for skin analysis.</span
+              ></label
+            >
+            <label class="check"
+              ><input id="credits" type="checkbox" required /><span
+                >I have checked my own dashboard: sufficient existing free
+                units, no paid billing and auto-refill disabled. The published
+                four-concern SD price is 9 units; I accept possible ancillary
+                charges within an intended 12-unit budget, without a
+                provider-enforced cap.</span
+              ></label
+            >
+            <label class="check"
+              ><input id="budget" type="checkbox" required /><span
+                >I authorize one registration, one JPEG upload and one
+                four-concern task. Failures or timeouts consume this notebook’s
+                attempt allowance. No automatic resubmission.</span
+              ></label
+            >
+            <button id="submit" type="submit" disabled>
+              Authorize this one analysis →</button
+            ><button id="clear" type="button" class="secondary">
+              Clear selected image
+            </button>
+          </form>
+          <p id="status" role="status" aria-live="polite">
+            Checking local session…
+          </p>
+          <p id="error" role="alert"></p>
+        </section>
+        <aside class="context">
+          <p class="eyebrow">YOUR IMAGE. YOUR DECISION.</p>
+          <h2>Real signals.<br /><em>Honest limits.</em></h2>
+          <p>
+            Images pass through this local server in memory. Orientation is
+            corrected and metadata stripped before upload. No facial image is
+            saved by DermaLoop. Perfect Corp currently documents 30-day media
+            retention and two-hour download URLs.
+          </p>
+          <p>
+            Scores are not a diagnosis, confidence estimate or proof that a
+            product works. Synthetic-image measurements verify integration only,
+            never real skin health.
+          </p>
+          <p>
+            A sanitized result is saved only under
+            <code>.private/local-live/result.json</code>. No provider IDs,
+            signed URLs or raw responses are returned to this screen. Results
+            are separate from sample and personal progress histories.
+          </p>
+          <p>
+            Stopping the browser or server does not cancel submitted provider
+            processing or guarantee a refund. Check your account dashboard after
+            the attempt. The app cannot verify your balance or disable provider
+            billing.
+          </p>
+          <p>
+            Keep this workspace on your own computer. Do not tunnel, proxy,
+            port-forward, share it over a network or deploy it.
+          </p>
+        </aside>
+      </div>
+      <section
+        id="results"
+        class="panel"
+        hidden
+        aria-labelledby="results-title"
+      >
+        <p class="eyebrow">LOCAL PRIVATE BASELINE / READ ONLY</p>
+        <h2 id="results-title">Your returned measurements.</h2>
+        <p id="source"></p>
+        <p id="provenance-note"></p>
+        <table>
+          <caption>
+            Genuine saved provider output · raw and UI adjusted scales are
+            distinct
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">SD action</th>
+              <th scope="col">Raw / 100</th>
+              <th scope="col">UI adjusted / 100</th>
+            </tr>
+          </thead>
+          <tbody id="scores"></tbody>
+        </table>
+        <p>No historical trend or clinical conclusion is inferred.</p>
+      </section>
+    </main>
+    <footer>
+      Change less. Choose better. · This companion is not the public Scan
+      Studio.
+    </footer>
+  </body>
+</html>
