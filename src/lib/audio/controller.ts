@@ -127,7 +127,7 @@ export function createMusicController(
   }
   return {
     autoplay() {
-      if (claimAutoplay(stores)) void play(false);
+      if (!disposed && claimAutoplay(stores)) void play(false);
     },
     toggle() {
       if (status === "playing" || status === "loading") {
@@ -135,6 +135,13 @@ export function createMusicController(
         audio.pause();
         emit("paused");
       } else void play(true);
+    },
+    enable() {
+      if (disposed) return;
+      markManualChoice();
+      off = false;
+      remember("on");
+      emit("paused");
     },
     soundOff() {
       markManualChoice();

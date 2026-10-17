@@ -138,9 +138,14 @@ test("existing sound-off preference persists across tabs and sessions; opt-in is
 }) => {
   await mock(page);
   await page.goto("/");
-  await page.evaluate(() => localStorage.setItem("dermaloop-music-choice", "off"));
+  await page.evaluate(() =>
+    localStorage.setItem("dermaloop-music-choice", "off"),
+  );
   await page.reload();
-  await expect(page.locator(".cassette-player")).toHaveAttribute("data-playback", "off");
+  await expect(page.locator(".cassette-player")).toHaveAttribute(
+    "data-playback",
+    "off",
+  );
   await expect(page.locator(".cassette-off")).toHaveCount(0);
   await expect(page.locator(".cassette-note")).toHaveCount(0);
   const other = await context.newPage();
@@ -364,7 +369,10 @@ test("real browser autoplay restriction falls back and manual gesture plays", as
       await page.locator("audio").evaluate((el: HTMLAudioElement) => el.paused),
     ).toBe(true);
     await page
-      .getByRole("button", { name: "Play Morning Stillness", exact: true })
+      .getByRole("button", {
+        name: "A little music? Tap to play.",
+        exact: true,
+      })
       .click();
     await expect(page.locator(".cassette-player")).toHaveAttribute(
       "data-playback",
@@ -374,4 +382,45 @@ test("real browser autoplay restriction falls back and manual gesture plays", as
   } finally {
     await browser.close();
   }
+});
+
+test("direct notebook first visit attempts once and settings opt-out survives a new session", async ({
+  page,
+}) => {
+  await mock(page);
+  await page.goto("/app?sample=1");
+  await expect(page.locator(".cassette-player")).toHaveAttribute(
+    "data-playback",
+    "playing",
+  );
+  expect(await calls(page)).toBe(1);
+  await page.getByRole("link", { name: "Privacy & settings" }).click();
+  await page
+    .getByRole("checkbox", { name: "Sound off — remember my choice" })
+    .check();
+  await expect(page.locator(".cassette-player")).toHaveAttribute(
+    "data-playback",
+    "off",
+  );
+  await page.evaluate(() => sessionStorage.clear());
+  await page.reload();
+  await expect(
+    page.getByRole("checkbox", { name: "Sound off — remember my choice" }),
+  ).toBeChecked();
+  expect(await calls(page)).toBe(0);
+  await page
+    .getByRole("checkbox", { name: "Sound off — remember my choice" })
+    .uncheck();
+  await expect(page.locator(".cassette-player")).toHaveAttribute(
+    "data-playback",
+    "paused",
+  );
+  expect(await calls(page)).toBe(0);
+  await page
+    .getByRole("button", { name: "Play Morning Stillness", exact: true })
+    .click();
+  await expect(page.locator(".cassette-player")).toHaveAttribute(
+    "data-playback",
+    "playing",
+  );
 });

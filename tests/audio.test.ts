@@ -207,3 +207,22 @@ describe("one session autoplay", () => {
     expect(c.audio.paused).toBe(true);
   });
 });
+
+it("re-enabling a saved opt-out is explicit and never starts playback itself", async () => {
+  const c = controller("off");
+  c.controls.enable();
+  expect(c.persistent.getItem(CHOICE_KEY)).toBe("on");
+  expect(c.states.at(-1)?.status).toBe("paused");
+  c.controls.autoplay();
+  expect(c.audio.calls).toBe(0);
+  c.controls.toggle();
+  await flush();
+  expect(c.audio.calls).toBe(1);
+});
+it("a disposed controller cannot claim the session autoplay", () => {
+  const c = controller();
+  c.controls.dispose();
+  c.controls.autoplay();
+  expect(c.session.getItem(SESSION_KEY)).toBeNull();
+  expect(c.audio.calls).toBe(0);
+});

@@ -11,6 +11,7 @@ const Context = createContext<{
   state: MusicState;
   toggle: () => void;
   off: () => void;
+  enable: () => void;
 } | null>(null);
 export function MusicProvider({ children }: { children: React.ReactNode }) {
   const audio = useRef<HTMLAudioElement>(null),
@@ -36,7 +37,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
     // before claiming the session, so it cannot create a second audio attempt.
     const ready = () => {
       frame = requestAnimationFrame(() => {
-        if (document.querySelector(".cassette-player")) instance.autoplay();
+        instance.autoplay();
       });
     };
     if (document.readyState === "complete") ready();
@@ -62,6 +63,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
         state,
         toggle: () => controller.current?.toggle(),
         off: () => controller.current?.soundOff(),
+        enable: () => controller.current?.enable(),
       }}
     >
       {children}
@@ -90,9 +92,12 @@ export default function CassettePlayer() {
           : state.status === "ended"
             ? "Play Morning Stillness again"
             : "Play Morning Stillness";
-  const note = state.status === "blocked"
-    ? "A little music? Tap to play."
-    : state.status === "error" ? "Music unavailable." : null;
+  const note =
+    state.status === "blocked"
+      ? "A little music? Tap to play."
+      : state.status === "error"
+        ? "Music unavailable."
+        : null;
   return (
     <div
       className="cassette-player"
@@ -152,10 +157,47 @@ export default function CassettePlayer() {
           </span>
         </button>
       </div>
-      {note && <span className="cassette-note">{note}</span>}
+      {note &&
+        (state.status === "blocked" ? (
+          <button
+            type="button"
+            className="cassette-note cassette-invitation"
+            onClick={toggle}
+          >
+            {note}
+          </button>
+        ) : (
+          <span className="cassette-note">{note}</span>
+        ))}
       <span className="cassette-tooltip" aria-hidden="true">
         {label}.
       </span>
     </div>
+  );
+}
+
+export function MusicPreference() {
+  const music = useContext(Context);
+  if (!music) return null;
+  return (
+    <>
+      <label className="check-label">
+        <input
+          type="checkbox"
+          checked={music.state.status === "off"}
+          disabled={!music.state.ready}
+          onChange={(event) =>
+            event.target.checked ? music.off() : music.enable()
+          }
+        />
+        Sound off — remember my choice
+      </label>
+      <p className="microcopy">
+        Pausing keeps your place. Sound off also prevents music on future
+        visits.
+        {!music.state.remembered &&
+          " Your browser could not save this preference; it applies to this visit only."}
+      </p>
+    </>
   );
 }

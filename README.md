@@ -45,7 +45,7 @@ Notebook persistence is per browser and origin using IndexedDB. No account sync,
 
 ## Optional listening
 
-The miniature **Morning Stillness** cassette plays the original user-supplied composition once at an initial 15% volume. Browser-blocked autoplay offers a direct tap-to-play fallback. Pause preserves your place. Previously saved sound-off preferences remain respected. OS and saved reduced motion stop the reels without disabling chosen audio. [Playback behavior and validation](docs/MORNING_STILLNESS.md).
+The miniature **Morning Stillness** cassette plays the original user-supplied composition once at an initial 15% volume. Browser-blocked autoplay offers a direct tap-to-play fallback. Pause preserves your place. Privacy & settings offers a persistent Sound off preference. Previously saved preferences remain respected. OS and saved reduced motion stop the reels without disabling chosen audio. [Playback behavior and validation](docs/MORNING_STILLNESS.md).
 
 ## Repository and privacy
 

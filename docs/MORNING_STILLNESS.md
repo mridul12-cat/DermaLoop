@@ -1,8 +1,10 @@
 # Morning Stillness cassette player
 
-Local implementation, 17 October 2026. No Git commit, push or deployment is part of this change. The preceding local-live work remains intact and uncommitted.
+Local implementation, 17 October 2026. The initial cassette and preceding local-live companion were published in commit `fa779f1`. This document also records the reviewed first-visit playback follow-up.
 
 ## Original asset
+
+The supplying user explicitly confirmed permission to redistribute this audio in the public DermaLoop GitHub repository and website on 17 October 2026. This records the user’s confirmation, rather than an independent copyright determination. The audio is not included in the MIT grant for application code and illustrations.
 
 The user-supplied `Morning_Stillness.mp3` is copied byte-for-byte to `public/audio/Morning_Stillness.mp3`. No trimming, looping, remixing, transcoding or artificial extension was performed. Source inspection with macOS `afinfo` reports 33.567292 seconds, stereo 44.1kHz MP3 at 192kbps. File size: **811,740 bytes** (about 793KiB). This is small enough to keep the original quality. SHA-256:
 
@@ -16,7 +18,7 @@ The same checksum is verified against the supplied original. Native Chromium dec
 
 `MusicProvider` lives in the persistent Next root layout. It owns exactly one hidden HTML audio element and one controller; the small visible cassette controls live in the landing/verification header and notebook sidebar. Client route changes replace controls as needed, not the audio instance. Playback therefore continues through sample navigation and browser history without resetting the composition.
 
-The illustrated SVG tape uses the existing cream/sage/forest-green palette and typography. Reels rotate only in the actual playing state. Play/pause indicators and a focus/hover tooltip make the action explicit. Following visual review, the separate Sound off button and neutral caption were removed; only blocked-playback and loading-error guidance appears below the cassette. Existing stored sound-off preferences remain respected. Controls stay in navigation flow, rather than floating over charts or forms. Mobile controls retain at least 44px hit targets. There is no external font, image, audio CDN or new runtime dependency.
+The illustrated SVG tape uses the existing cream/sage/forest-green palette and typography. Reels rotate only in the actual playing state. Play/pause indicators and a focus/hover tooltip make the action explicit. Following visual review, the separate Sound off button and neutral caption were removed; only blocked-playback and loading-error guidance appears below the cassette. Persistent Sound off is available in Privacy & settings, keeping the cassette uncluttered. Existing stored sound-off preferences remain respected. Controls stay in navigation flow, rather than floating over charts or forms. Mobile controls retain at least 44px hit targets. There is no external font, image, audio CDN or new runtime dependency.
 
 ## Playback contract
 
@@ -25,10 +27,10 @@ The illustrated SVG tape uses the existing cream/sage/forest-green palette and t
 - A browser policy rejection is caught; the UI stays stopped and says **“A little music? Tap to play.”** A direct click/keyboard activation invokes playback immediately.
 - Manual play/pause also settles the session so a pending initial autoplay cannot override the user's action.
 - Pause preserves position. It does not set a permanent opt-out. Natural `ended` stops both playback and reels; only explicit **Play again** restarts from zero. `loop` is always false.
-- Previously stored `localStorage["dermaloop-music-choice"]="off"` preferences still prevent autoplay. Only explicit manual play opts back in. The separate opt-out control was removed at the user’s request; pause remains distinct from persistent opt-out.
+- Previously stored `localStorage["dermaloop-music-choice"]="off"` preferences still prevent autoplay. Only explicit manual play opts back in. The separate cassette opt-out control was removed at the user’s request; Privacy & settings now provides the persistent opt-out. Turning that preference off allows manual playback but does not itself start music. Pause remains distinct from persistent opt-out.
 - If storage access is blocked, automatic playback fails closed; manual audio remains available.
 - Media failures disable the playback control and show **“Music unavailable.”** No repeated load/play retries or error logging with user data occur.
-- Full page exit pauses playback. Controller disposal cancels scheduled work, detaches listeners, pauses and releases the source. React StrictMode's canceled rehearsal cannot claim/play a duplicate attempt. Unknown/404 pages without visible controls do not autoplay.
+- Full page exit pauses playback. Controller disposal cancels scheduled work, detaches listeners, pauses and releases the source. React StrictMode's canceled rehearsal cannot claim/play a duplicate attempt.
 
 No listening analytics, playback history, progress persistence, external activity transmission, background polling or JS animation timer is added. Only the two local preference flags persist. The same-origin asset is requested by the browser when playback is attempted; `preload="none"` avoids eager downloading for opted-out visitors.
 
@@ -49,3 +51,13 @@ Real buttons have state-specific accessible names and visible focus. The optiona
 Provider code, public scan restrictions and the four verified provider measurements have no diff. No YouCam request, image upload or credit operation was performed. No credentials were changed.
 
 Physical iOS/Safari/Firefox and device-specific volume/autoplay behavior remain unverified. Browsers retain control of sound policy. No universal field-performance or assistive-technology conformance claim is made.
+
+## First-visit playback follow-up
+
+The original root effect attempted playback after page load and a scheduled paint, but only if a `.cassette-player` DOM query succeeded at that instant. That condition could skip playback when notebook UI rendered later. The readiness callback now invokes the shared controller unconditionally; the controller still claims the session before `play()` and suppresses saved opt-outs. Disposed controllers cannot consume that claim. No additional timer, global-gesture listener, visibility retry, audio instance, muted/unmute workaround or browser-policy bypass was added.
+
+The blocked invitation is a real keyboard-accessible button that calls the same manual playback handler as the tape. Media state and actual playback promises remain authoritative. An existing attempt marker suppresses autoplay after refresh; testing a fresh attempt requires a new browser session, not repeated reloads. A saved opt-out persists across sessions until explicitly changed.
+
+Audible autoplay remains controlled by the browser. Permissive and restrictive Chromium policies are configured only by the test harness, never by application code. Physical Safari/iOS playback remains unverified.
+
+Follow-up validation: 244 unit tests and 43 production browser tests passed, alongside TypeScript, ESLint, production build and public security checks. Native Chromium with default policy blocked audible autoplay and showed the invitation with one audio instance at 0.15 volume and no page errors. Under explicitly permitted test policy, the original full track played and ended naturally; under restrictive policy, clicking the invitation started real playback. Desktop/mobile screenshots were inspected; no 320px horizontal overflow was observed.

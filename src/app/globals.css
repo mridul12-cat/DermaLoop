@@ -2677,3 +2677,21 @@ html[data-document-visible="false"] .cassette-reel {
     bottom: 6px;
   }
 }
+
+.cassette-invitation {
+  background: transparent;
+  padding: 3px 0;
+  min-height: 24px;
+  white-space: normal;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  border-radius: 3px;
+}
+.cassette-invitation:hover {
+  color: var(--teal);
+}
+
+@media (max-width: 600px) {
+  .cassette-invitation { min-height: 44px; }
+}

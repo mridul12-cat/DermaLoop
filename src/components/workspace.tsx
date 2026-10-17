@@ -19,7 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { Brand, Face, Mark } from "./brand";
-import CassettePlayer from "./music-player";
+import CassettePlayer, { MusicPreference } from "./music-player";
 import { ScoreValue } from "./motion-preferences";
 import { PUBLIC_PROVIDER_ACCESS } from "@/lib/public-demo";
 import {
@@ -892,6 +892,7 @@ export default function WorkspaceApp({
                       />{" "}
                       Higher contrast
                     </label>
+                    <MusicPreference />
                     <button
                       className="danger"
                       onClick={async () => {
