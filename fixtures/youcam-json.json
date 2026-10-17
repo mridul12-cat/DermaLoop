@@ -1,0 +1,1 @@
+{"status":200,"data":{"task_status":"success","results":{"output":[{"type":"texture","ui_score":68,"raw_score":57.33,"mask_urls":["https://yce-us.s3-accelerate.amazonaws.com/example/texture.jpg"]},{"type":"pore","ui_score":92,"raw_score":95.34,"mask_urls":[]}]}}}

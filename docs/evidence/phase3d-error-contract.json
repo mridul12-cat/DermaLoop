@@ -1,0 +1,39 @@
+{
+  "source": "https://docs.makeupar.com/_bundle/reference/ai_skin_analysis.json?download=",
+  "reviewedAt": "2026-10-17T10:40:39.478060Z",
+  "statusOperation": "GET /s2s/v2.1/task/skin-analysis/{task_id}",
+  "documentedStates": [
+    "running",
+    "success",
+    "error"
+  ],
+  "documentedFailureFields": [
+    "data.error",
+    "data.error_message"
+  ],
+  "documentedEngineErrorCodes": [
+    "error_exceed_max_image_size",
+    "exceed_max_filesize",
+    "invalid_parameter",
+    "error_download_image",
+    "error_download_mask",
+    "error_decode_image",
+    "error_decode_mask",
+    "error_nsfw_content_detected",
+    "error_no_face",
+    "error_pose",
+    "error_face_parsing",
+    "error_inference",
+    "exceed_nsfw_retry_limits",
+    "error_upload",
+    "unknown_internal_error"
+  ],
+  "separateImageGuideSource": "https://docs.makeupar.com/reference/ai_skin_analysis/section/overview/file-specs-and-errors",
+  "additionalImageGuideCodes": [
+    "error_below_min_image_size",
+    "error_src_face_too_small",
+    "error_src_face_out_of_bound",
+    "error_lighting_dark"
+  ],
+  "note": "Documentation contract only, not recovered error fields from the real failed task."
+}

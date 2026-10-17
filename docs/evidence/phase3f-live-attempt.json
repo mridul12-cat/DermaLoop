@@ -1,0 +1,154 @@
+{
+  "phase": "3F",
+  "outcome": "success",
+  "claimedAt": "2026-10-17T10:59:41.069Z",
+  "completedAt": "2026-10-17T10:59:55.675Z",
+  "counts": {
+    "registration": 1,
+    "upload": 1,
+    "task": 1,
+    "status": 1
+  },
+  "requestedActions": [
+    "acne",
+    "pore",
+    "texture",
+    "redness"
+  ],
+  "imageProvenance": "synthetic_test_image",
+  "sourceLabel": "Live YouCam API \u2014 Synthetic Test Image",
+  "baselineSaved": true,
+  "normalization": "PASS",
+  "metrics": [
+    {
+      "action": "acne",
+      "returned": true,
+      "rawScorePresent": true,
+      "uiScorePresent": true,
+      "rawAndUiSeparate": true
+    },
+    {
+      "action": "pore",
+      "returned": true,
+      "rawScorePresent": true,
+      "uiScorePresent": true,
+      "rawAndUiSeparate": true
+    },
+    {
+      "action": "texture",
+      "returned": true,
+      "rawScorePresent": true,
+      "uiScorePresent": true,
+      "rawAndUiSeparate": true
+    },
+    {
+      "action": "redness",
+      "returned": true,
+      "rawScorePresent": true,
+      "uiScorePresent": true,
+      "rawAndUiSeparate": true
+    }
+  ],
+  "publicLiveEnabled": false,
+  "documentedExpectedAnalysisUnits": 9,
+  "intendedTotalCeilingUnits": 12,
+  "observedUnitConsumption": null,
+  "remainingBalanceIndependentlyObserved": false,
+  "phase3cEvidencePreserved": true,
+  "evidence": [
+    {
+      "operation": "registration",
+      "state": "started",
+      "counts": {
+        "registration": 1,
+        "upload": 0,
+        "task": 0,
+        "status": 0
+      },
+      "recordedAt": "2026-10-17T10:59:41.070Z"
+    },
+    {
+      "operation": "registration",
+      "httpStatus": 200,
+      "counts": {
+        "registration": 1,
+        "upload": 0,
+        "task": 0,
+        "status": 0
+      },
+      "recordedAt": "2026-10-17T10:59:42.273Z"
+    },
+    {
+      "operation": "upload",
+      "state": "started",
+      "counts": {
+        "registration": 1,
+        "upload": 1,
+        "task": 0,
+        "status": 0
+      },
+      "uploadHostname": "yce-us.s3-accelerate.amazonaws.com",
+      "exactHostAccepted": true,
+      "recordedAt": "2026-10-17T10:59:42.278Z"
+    },
+    {
+      "operation": "upload",
+      "httpStatus": 200,
+      "counts": {
+        "registration": 1,
+        "upload": 1,
+        "task": 0,
+        "status": 0
+      },
+      "recordedAt": "2026-10-17T10:59:44.220Z"
+    },
+    {
+      "operation": "task",
+      "state": "started",
+      "counts": {
+        "registration": 1,
+        "upload": 1,
+        "task": 1,
+        "status": 0
+      },
+      "recordedAt": "2026-10-17T10:59:44.221Z"
+    },
+    {
+      "operation": "task",
+      "httpStatus": 200,
+      "counts": {
+        "registration": 1,
+        "upload": 1,
+        "task": 1,
+        "status": 0
+      },
+      "recordedAt": "2026-10-17T10:59:44.587Z"
+    },
+    {
+      "operation": "status",
+      "state": "started",
+      "counts": {
+        "registration": 1,
+        "upload": 1,
+        "task": 1,
+        "status": 1
+      },
+      "recordedAt": "2026-10-17T10:59:54.592Z"
+    },
+    {
+      "operation": "status",
+      "httpStatus": 200,
+      "counts": {
+        "registration": 1,
+        "upload": 1,
+        "task": 1,
+        "status": 1
+      },
+      "recordedAt": "2026-10-17T10:59:55.666Z"
+    },
+    {
+      "providerTaskState": "success",
+      "recordedAt": "2026-10-17T10:59:55.670Z"
+    }
+  ]
+}

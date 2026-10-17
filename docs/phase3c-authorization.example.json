@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "imagePath": "",
+  "availableFreeUnits": null,
+  "balanceConfirmedAt": "",
+  "priceConfirmedAt": "",
+  "confirmedAnalysisCostUnits": 9,
+  "maxAnalysisUnits": 12,
+  "confirmedMaximumTotalUnits": null,
+  "allProviderCostsWithinBudgetConfirmed": false,
+  "existingFreeCreditsOnlyConfirmed": false,
+  "authorizeImageUpload": false,
+  "authorizeOneAnalysis": false,
+  "adultImageOwnerConsent": false,
+  "acknowledgePerfectCorp30DayRetention": false,
+  "frontFacingEvenLightConfirmed": false,
+  "confirmedAt": ""
+}

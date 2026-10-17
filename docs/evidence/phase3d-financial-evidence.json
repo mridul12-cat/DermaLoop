@@ -1,0 +1,15 @@
+{
+  "phase": "3D",
+  "recordedAt": "2026-10-17T10:40:39.478060Z",
+  "source": "User-reported screenshot-supported dashboard transaction history; not independently accessed in this phase",
+  "analysisTransactionsUnits": [
+    -9,
+    9
+  ],
+  "netObservedAnalysisUnits": 0,
+  "displayedBalanceAfterReversal": 1040,
+  "observationTimestamp": null,
+  "freshDashboardVerification": false,
+  "scope": "Observed Phase 3C analysis attempt only; does not establish ancillary costs or future refund guarantees",
+  "providerRequestsThisPhase": 0
+}

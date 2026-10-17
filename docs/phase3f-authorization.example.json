@@ -1,0 +1,31 @@
+{
+  "phase": "3F",
+  "authorizationScope": "second_controlled_synthetic_test",
+  "secondAttemptExplicitlyAuthorized": false,
+  "imageSha256": "335b1d952d0ec5effc9569ec253ffad2ebbf37d1a5fdf70fd609f756d598c8b6",
+  "priorAttemptSha256": "d13bda0cb61c70bad11a754013d081a8efb8eb8d4c84ca529ee9d0ce133e4633",
+  "approval": {
+    "schemaVersion": 3,
+    "imageProvenance": "synthetic_test_image",
+    "imagePath": "ABSOLUTE_REVIEWED_ARTIFACT_PATH",
+    "authorizationRecordedAt": null,
+    "priceConfirmedAt": null,
+    "confirmedAnalysisCostUnits": 9,
+    "maxAnalysisUnits": 12,
+    "previousBalanceEvidence": null,
+    "currentBalanceVerified": false,
+    "allProviderCostsWithinBudgetConfirmed": false,
+    "acceptHistoricalBillingEvidence": false,
+    "acceptUnknownAncillaryUnitCost": false,
+    "acknowledgeNoProviderSideBudgetCap": false,
+    "evidenceOfMonetaryBillingOrCostAboveBudget": false,
+    "existingFreeCreditsOnlyConfirmed": false,
+    "authorizeImageUpload": false,
+    "authorizeOneAnalysis": false,
+    "syntheticImageUseAuthorized": false,
+    "fictionalAdultDepictionConfirmed": false,
+    "acknowledgeNoClinicalValidity": false,
+    "acknowledgePerfectCorp30DayRetention": false,
+    "frontFacingEvenLightConfirmed": false
+  }
+}

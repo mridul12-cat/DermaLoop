@@ -1,0 +1,49 @@
+{
+  "name": "dermaloop",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 0.0.0.0",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "check": "npm run typecheck && npm run lint && npm test && npm run build",
+    "youcam:smoke": "node scripts/youcam-smoke.mjs",
+    "format": "prettier --write src tests scripts *.ts *.mjs *.json",
+    "env:check": "node scripts/env-check.mjs",
+    "youcam:controlled": "node --conditions=react-server --import tsx scripts/youcam-controlled-once.ts",
+    "youcam:phase3f": "node --conditions=react-server --import tsx scripts/youcam-phase3f-once.ts",
+    "public:check": "node scripts/public-check.mjs",
+    "test:e2e:production": "PLAYWRIGHT_PRODUCTION=1 playwright test"
+  },
+  "dependencies": {
+    "idb": "8.0.4",
+    "lucide-react": "1.59.0",
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "server-only": "0.0.1",
+    "sharp": "0.35.5",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "@playwright/test": "1.64.1",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.5",
+    "prettier": "3.9.10",
+    "tsx": "^4.23.15",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2",
+    "vitest": "4.1.12"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "sourceLabel": "Live YouCam API — Synthetic Test Image",
+  "provider": "Perfect Corp YouCam Skin Analysis V2.1",
+  "capturedDate": "2026-10-17",
+  "metrics": [
+    {
+      "action": "acne",
+      "raw": 88.93117000000001,
+      "ui": 85
+    },
+    {
+      "action": "pore",
+      "raw": 46.410359382629395,
+      "ui": 66
+    },
+    {
+      "action": "texture",
+      "raw": 88.75150084495544,
+      "ui": 84
+    },
+    {
+      "action": "redness",
+      "raw": 70.42996978759766,
+      "ui": 76
+    }
+  ]
+}

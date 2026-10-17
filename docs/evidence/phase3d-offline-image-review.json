@@ -1,0 +1,60 @@
+{
+  "provenance": "synthetic_test_image",
+  "input": {
+    "format": "png",
+    "width": 1346,
+    "height": 1169,
+    "orientation": null,
+    "hasExif": false
+  },
+  "prepared": {
+    "format": "jpeg",
+    "width": 1346,
+    "height": 1169,
+    "bytes": 309506,
+    "hasExif": false,
+    "orientation": null,
+    "space": "srgb"
+  },
+  "scales": [
+    {
+      "width": 80,
+      "height": 70,
+      "brightness": 140.22806259426923,
+      "sharpness": 20.15761685520369
+    },
+    {
+      "width": 160,
+      "height": 139,
+      "brightness": 141.38526999906773,
+      "sharpness": 13.403442603714309
+    },
+    {
+      "width": 320,
+      "height": 278,
+      "brightness": 142.2828486418518,
+      "sharpness": 10.91730648072209
+    },
+    {
+      "width": 640,
+      "height": 556,
+      "brightness": 142.61729738153588,
+      "sharpness": 11.116744114052432
+    }
+  ],
+  "blurred160Control": {
+    "width": 160,
+    "height": 139,
+    "brightness": 141.44450790907888,
+    "sharpness": 2.540793070313226
+  },
+  "manualFaceWidthEstimate": {
+    "fractionRange": [
+      0.35,
+      0.4
+    ],
+    "method": "Visual estimate of visible face boundaries, not a detector or provider measurement"
+  },
+  "pixelProxyLimitation": "Uncalibrated; includes background and hair; cannot establish provider acceptance or rejection",
+  "providerRequests": 0
+}

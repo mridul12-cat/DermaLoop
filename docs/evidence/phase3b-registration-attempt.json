@@ -1,0 +1,21 @@
+{
+  "phase": "3B revised",
+  "recordedAt": "2026-10-17T09:33:30.502Z",
+  "freeCreditsBasis": "User explicitly confirmed existing free credits and accepted possible unit deduction",
+  "dashboardBalanceBefore": null,
+  "dashboardBalanceAfter": null,
+  "dashboardReason": "Accessible browser session was signed out; no account usage/billing evidence available",
+  "billingActivated": false,
+  "publicLiveDisabled": true,
+  "postAttempts": 1,
+  "httpStatus": 200,
+  "authentication": "accepted: successful schema-valid registration response",
+  "registrationSchema": "PASS",
+  "returnedUploadHostname": "yce-us.s3-accelerate.amazonaws.com",
+  "allowlistAccepted": true,
+  "observedUnitBalanceChange": null,
+  "imagePutRequests": 0,
+  "analysisTaskRequests": 0,
+  "automaticRetries": 0,
+  "outcome": "registration validated; stopped before upload"
+}

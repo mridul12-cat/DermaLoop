@@ -1,0 +1,27 @@
+{
+  "phase": "3F",
+  "state": "PREPARED_PENDING_FRESH_AUTHORIZATION",
+  "recordedAt": "2026-10-17T10:56:33.501281Z",
+  "imageSha256": "335b1d952d0ec5effc9569ec253ffad2ebbf37d1a5fdf70fd609f756d598c8b6",
+  "dimensions": {
+    "width": 680,
+    "height": 850
+  },
+  "bytes": 550743,
+  "hashEstablishedBy": "Current artifact matched byte-for-byte reproduction of Phase 3E crop from unchanged original; then pinned for execution",
+  "imageReencodedForUpload": false,
+  "phase3cMarkerPreserved": true,
+  "phase3fAuthorizationCreated": false,
+  "phase3fAttemptCreated": false,
+  "providerRequests": 0,
+  "registration": "not attempted",
+  "upload": "not attempted",
+  "task": "not created",
+  "normalization": "not exercised live",
+  "baselineSaved": false,
+  "observedUnitConsumption": null,
+  "publicLiveEnabled": false,
+  "documentedAnalysisUnits": 9,
+  "intendedMaximumFreeUnits": 12,
+  "atomicProviderCap": false
+}
