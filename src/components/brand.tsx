@@ -35,7 +35,13 @@ export function Face({ hero = false }: { hero?: boolean }) {
       </defs>
       <circle cx="270" cy="280" r="245" fill="url(#wash)" />
       <circle cx="270" cy="280" r="230" fill="url(#dots)" />
-      <g fill="none" stroke="#658e7b" strokeWidth=".8" opacity=".5">
+      <g
+        className={hero ? "hero-orbits" : undefined}
+        fill="none"
+        stroke="#658e7b"
+        strokeWidth=".8"
+        opacity=".5"
+      >
         {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
           <ellipse
             key={i}

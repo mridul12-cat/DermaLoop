@@ -1885,3 +1885,469 @@ footer > span {
 .verification-page table td {
   overflow-wrap: anywhere;
 }
+
+/* Living Editorial: quiet, precise, purposeful, reversible. */
+:root {
+  --motion-press: 150ms;
+  --motion-feedback: 200ms;
+  --motion-fold: 280ms;
+  --motion-enter: 440ms;
+  --motion-chart: 680ms;
+  --ease-editorial: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+html[data-contrast="high"] {
+  --muted: #344a3d;
+  --line: #859580;
+  --teal: #164c40;
+}
+.button,
+.plain,
+.metric,
+.sidebar nav a,
+.journey-progress a,
+summary {
+  transition:
+    color var(--motion-feedback),
+    background-color var(--motion-feedback),
+    border-color var(--motion-feedback),
+    box-shadow var(--motion-feedback),
+    transform var(--motion-press) var(--ease-editorial);
+}
+.button:active:not(:disabled) {
+  transform: translateY(0) scale(0.985);
+}
+.button:disabled {
+  transform: none;
+}
+.button svg,
+.text-link svg,
+.sidebar nav svg,
+.journey-progress a span {
+  transition: transform var(--motion-feedback) var(--ease-editorial);
+}
+.button:is(:hover, :focus-visible):not(:disabled) svg,
+.text-link:is(:hover, :focus-visible) svg {
+  transform: translateX(2px);
+}
+.sidebar nav a {
+  position: relative;
+  border-radius: 3px;
+}
+.sidebar nav a::before {
+  content: "";
+  position: absolute;
+  inset: 9px auto 9px 0;
+  width: 2px;
+  background: var(--teal);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform var(--motion-feedback) var(--ease-editorial);
+}
+.sidebar nav a[aria-current]::before {
+  transform: scaleY(1);
+}
+.sidebar nav a:is(:hover, :focus-visible),
+.journey-progress a:is(:hover, :focus-visible) {
+  background: var(--celadon);
+  color: var(--teal);
+}
+.sidebar nav a:is(:hover, :focus-visible) svg {
+  transform: translateY(-1px);
+}
+.journey-progress a[aria-current="step"]:is(:hover, :focus-visible) {
+  background: #193e39;
+  color: white;
+}
+.metric:is(:hover, :focus-visible) {
+  background: #edf1e8;
+}
+.metric.selected {
+  box-shadow: inset 2px 0 var(--teal);
+}
+.metric-track {
+  overflow: hidden;
+}
+.metric-track > span {
+  transition: background-color var(--motion-feedback);
+}
+input,
+textarea,
+select {
+  transition:
+    border-color var(--motion-feedback),
+    box-shadow var(--motion-feedback),
+    background-color var(--motion-feedback);
+}
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px #275e5712;
+}
+.decision-form textarea {
+  border-radius: 2px;
+  line-height: 1.7;
+}
+.decision-form textarea[aria-invalid="true"] {
+  border-color: var(--coral);
+}
+.save-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 2px solid var(--teal);
+  padding: 9px 14px;
+  font-size: 12px;
+  color: var(--teal);
+  background: var(--celadon);
+}
+.routine-card {
+  border-top: 2px solid #bacbbb;
+}
+.routine-card h2 {
+  line-height: 1.15;
+}
+.journal-fold > summary {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 22px;
+  letter-spacing: 0.02em;
+}
+.routine-content p,
+.observation p {
+  line-height: 1.8;
+}
+.checkpoint b,
+.observation small {
+  font-variant-numeric: tabular-nums;
+}
+.observation {
+  position: relative;
+}
+.observation::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  position: absolute;
+  left: -3px;
+  top: 6px;
+  background: #8fa58c;
+}
+.reading-bridge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 22px;
+  padding: 12px 16px;
+  background: var(--celadon);
+  border-radius: 2px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.reading-bridge::after {
+  content: "";
+  border-top: 1px solid #a8beb1;
+  flex: 1;
+  order: 1;
+}
+.reading-bridge > span:last-child {
+  order: 3;
+}
+.reading-bridge > svg {
+  order: 2;
+}
+.delta > .score-value {
+  font: inherit;
+  color: inherit;
+  display: inline;
+}
+.chart-point {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    stroke-width var(--motion-feedback),
+    fill var(--motion-feedback),
+    transform var(--motion-feedback);
+}
+.selected-point {
+  fill: #d7e6d9;
+  stroke-width: 3px;
+  transform: scale(1.12);
+}
+.selected-reading {
+  background: var(--celadon);
+}
+.closing-loop {
+  display: block;
+  float: right;
+  width: 30px;
+  height: 30px;
+  color: var(--teal);
+}
+.closing-loop svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  stroke-width: 1;
+}
+.decision-card details > p:last-child a {
+  border-bottom: 1px solid #8ca894;
+  margin-right: 5px;
+  text-underline-offset: 3px;
+}
+.decision-card details > p:last-child a:focus-visible {
+  border-color: var(--teal);
+}
+.verified-metrics {
+  column-gap: 32px;
+}
+.verified-metrics h2 {
+  margin-bottom: 22px;
+}
+.score-pair span {
+  letter-spacing: 0.025em;
+}
+.score-pair strong {
+  font-variant-numeric: tabular-nums;
+}
+.verified-workflow {
+  padding-left: 0;
+  list-style: none;
+  counter-reset: verified;
+}
+.verified-workflow li {
+  counter-increment: verified;
+  position: relative;
+  padding: 12px 0 12px 34px;
+  border-bottom: 1px solid #becdba;
+  line-height: 1.6;
+}
+.verified-workflow li::before {
+  content: counter(verified, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 14px;
+  color: var(--teal);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+.scan-demo-links {
+  display: flex;
+  gap: 8px 20px;
+  flex-wrap: wrap;
+}
+
+@keyframes editorial-enter {
+  from {
+    opacity: 0.65;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes annotation-enter {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes recorded-value {
+  from {
+    opacity: 0.55;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes recorded-path {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes orbit-drift {
+  0%,
+  100% {
+    transform: rotate(-0.65deg) translateY(0);
+  }
+  50% {
+    transform: rotate(0.65deg) translateY(2px);
+  }
+}
+@keyframes closing-loop {
+  from {
+    opacity: 0.5;
+    stroke-dashoffset: 100;
+  }
+  to {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-motion="full"] .hero-copy > :is(.eyebrow, h1, p, .hero-actions) {
+    animation: editorial-enter var(--motion-enter) var(--ease-editorial) both;
+  }
+  html[data-motion="full"] .hero-copy > h1 {
+    animation-delay: 50ms;
+  }
+  html[data-motion="full"] .hero-copy > p {
+    animation-delay: 100ms;
+  }
+  html[data-motion="full"] .hero-copy > .hero-actions {
+    animation-delay: 150ms;
+  }
+  html[data-motion="full"] .float-label {
+    animation: annotation-enter 500ms var(--ease-editorial) both;
+    animation-delay: 180ms;
+  }
+  html[data-motion="full"] .label-two {
+    animation-delay: 240ms;
+  }
+  .hero-orbits {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  html[data-motion="full"] .hero-orbits {
+    animation: orbit-drift 20s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+  html[data-motion="full"][data-document-visible="true"]
+    .hero-art[data-ambient-active="true"]
+    .hero-orbits {
+    animation-play-state: running;
+  }
+  html[data-motion="full"]
+    [data-reveal]:not([data-reveal="chart"])[data-entered="true"] {
+    animation: editorial-enter var(--motion-enter) var(--ease-editorial) both;
+    animation-delay: var(--enter-delay, 0ms);
+  }
+  html[data-motion="full"]
+    [data-reveal="chart"][data-entered="true"]
+    .chart-segment {
+    stroke-dasharray: 1;
+    animation: recorded-path var(--motion-chart) var(--ease-editorial) both;
+  }
+  html[data-motion="full"] .numeric-change {
+    display: inline-block;
+    animation: recorded-value 180ms var(--ease-editorial);
+  }
+  html[data-motion="full"]
+    [data-reveal="decision"][data-entered="true"]
+    .closing-loop
+    ellipse {
+    stroke-dasharray: 100;
+    animation: closing-loop 700ms var(--ease-editorial) both;
+  }
+  html[data-motion="full"]
+    [data-reveal="decision"][data-entered="true"]
+    details
+    > p {
+    animation: editorial-enter 400ms var(--ease-editorial) both;
+    animation-delay: 60ms;
+  }
+  html[data-motion="full"]
+    [data-reveal="decision"][data-entered="true"]
+    details
+    > p:last-child {
+    animation-delay: 120ms;
+  }
+  @supports (interpolate-size: allow-keywords) {
+    html[data-motion="full"] details::details-content {
+      interpolate-size: allow-keywords;
+      block-size: 0;
+      overflow: clip;
+      transition:
+        block-size var(--motion-fold) var(--ease-editorial),
+        content-visibility var(--motion-fold) allow-discrete;
+    }
+    html[data-motion="full"] details[open]::details-content {
+      block-size: auto;
+    }
+  }
+}
+/* User preference is global, persistent and stronger than every motion rule. */
+html[data-motion="reduced"],
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after,
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+html[data-motion="reduced"] details::details-content,
+.reduce-motion details::details-content {
+  transition: none !important;
+}
+html[data-motion="reduced"] .button,
+html[data-motion="reduced"] .chart-point,
+html[data-motion="reduced"] .sidebar nav svg,
+html[data-motion="reduced"] .text-link svg {
+  transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  details::details-content {
+    transition: none !important;
+  }
+  .button,
+  .chart-point,
+  .sidebar nav svg,
+  .text-link svg {
+    transform: none !important;
+  }
+}
+@media (max-width: 760px) {
+  .sidebar nav a::before {
+    inset: auto 10px 0;
+    width: auto;
+    height: 2px;
+    transform: scaleX(0);
+  }
+  .sidebar nav a[aria-current]::before {
+    transform: scaleX(1);
+  }
+  .verified-metrics {
+    column-gap: 16px;
+  }
+}
+/* Keep the public scan limitation readable before the local capture controls. */
+.scan-form .demo-banner {
+  display: block;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.scan-form .demo-banner > span {
+  display: block;
+}
+.scan-form .scan-demo-links {
+  margin-top: 12px;
+}
+@media (min-width: 761px) and (max-width: 960px) {
+  .verification-grid {
+    grid-template-columns: 1fr;
+  }
+  .verification-next {
+    align-items: start;
+    flex-direction: column;
+  }
+}

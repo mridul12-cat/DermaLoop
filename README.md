@@ -53,6 +53,7 @@ The hook rejects sensitive paths even when force-staged. As with any local hook,
 
 ## Evidence and submission
 
+- [Living Editorial motion and QA audit](docs/PHASE6_EDITORIAL_POLISH.md)
 - [Current readiness audit](docs/FINAL_AUDIT.md)
 - [Production deployment instructions](docs/DEPLOYMENT.md)
 - [Devpost copy](docs/SUBMISSION.md)

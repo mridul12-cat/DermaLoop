@@ -18,7 +18,8 @@ import {
   Upload,
   X,
 } from "lucide-react";
-import { Brand, Face } from "./brand";
+import { Brand, Face, Mark } from "./brand";
+import { ScoreValue } from "./motion-preferences";
 import { PUBLIC_PROVIDER_ACCESS } from "@/lib/public-demo";
 import {
   metrics,
@@ -53,7 +54,15 @@ const tabs = [
   { id: "routine", name: "Routine Lab", icon: FlaskConical },
   { id: "decision", name: "Decision Studio", icon: Sparkles },
 ];
-function Chart({ scans, metric }: { scans: SkinScan[]; metric: string }) {
+function Chart({
+  scans,
+  metric,
+  selected,
+}: {
+  scans: SkinScan[];
+  metric: string;
+  selected?: string;
+}) {
   const xAt = (i: number) =>
     scans.length < 2 ? 330 : 60 + (i * 525) / (scans.length - 1);
   const vals = scans.map(
@@ -64,11 +73,17 @@ function Chart({ scans, metric }: { scans: SkinScan[]; metric: string }) {
   return (
     <>
       <svg
+        key={`${metric}:${scans.map((s) => s.id).join(":")}`}
+        data-reveal="chart"
         className="chart"
         viewBox="0 0 640 220"
         role="img"
         aria-label={`${labels[metric]} raw scores over time; 0 to 100 scale`}
       >
+        <desc>
+          Only recorded values are plotted. Lines join compatible readings only.
+          Exact raw and UI scores are available in the data table below.
+        </desc>
         <defs>
           <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
             <stop stopColor="#8db5a1" stopOpacity=".4" />
@@ -97,6 +112,8 @@ function Chart({ scans, metric }: { scans: SkinScan[]; metric: string }) {
                 vals[i - 1] !== null &&
                 compare(scans[i - 1], scans[i], metric).comparable && (
                   <line
+                    className="chart-segment"
+                    pathLength={1}
                     x1={xAt(i - 1)}
                     x2={xAt(i)}
                     y1={185 - vals[i - 1]! * 1.5}
@@ -106,6 +123,11 @@ function Chart({ scans, metric }: { scans: SkinScan[]; metric: string }) {
                   />
                 )}
               <circle
+                className={
+                  scans[i].id === selected
+                    ? "chart-point selected-point"
+                    : "chart-point"
+                }
                 cx={xAt(i)}
                 cy={185 - v * 1.5}
                 r="6"
@@ -148,7 +170,10 @@ function Chart({ scans, metric }: { scans: SkinScan[]; metric: string }) {
                 (v) => v.metricKey === metric && v.region === "whole",
               );
               return (
-                <tr key={s.id}>
+                <tr
+                  key={s.id}
+                  className={s.id === selected ? "selected-reading" : undefined}
+                >
                   <td>{date(s.capturedAt)}</td>
                   <td>{score?.rawScore ?? "Missing"}</td>
                   <td>{score?.uiScore ?? "Missing"}</td>
@@ -328,7 +353,7 @@ export default function WorkspaceApp({
           </span>
         </header>
         <main className="app-content">
-          <div className="page-intro">
+          <div className="page-intro" key={section} data-reveal="section">
             <div>
               <div className="eyebrow">
                 {isDemo
@@ -461,7 +486,12 @@ export default function WorkspaceApp({
                                 <span className="metric-track">
                                   <span style={{ width: `${v ?? 0}%` }} />
                                 </span>
-                                <b>{v ?? "—"}</b>
+                                <b>
+                                  <ScoreValue
+                                    value={v ?? "—"}
+                                    active={metric === m}
+                                  />
+                                </b>
                                 <ChevronRight size={14} />
                               </button>
                             );
@@ -482,7 +512,11 @@ export default function WorkspaceApp({
                             RAW SCORE · {isDemo ? "SAMPLE" : "LIVE"}
                           </span>
                         </div>
-                        <Chart scans={w.scans.slice(-4)} metric={metric} />
+                        <Chart
+                          scans={w.scans.slice(-4)}
+                          metric={metric}
+                          selected={scan?.id}
+                        />
                         <p className="microcopy">
                           {w.scans.length === 1
                             ? "Your baseline is ready. Return later to see a trend."
@@ -571,15 +605,48 @@ export default function WorkspaceApp({
                           </select>
                         </label>
                       </div>
+                      {result.comparable && a && b && (
+                        <div
+                          className="reading-bridge"
+                          aria-label="Compared recorded raw values"
+                        >
+                          <span>
+                            {date(a.capturedAt)} ·{" "}
+                            {
+                              a.scores.find(
+                                (s) =>
+                                  s.metricKey === metric &&
+                                  s.region === "whole",
+                              )?.rawScore
+                            }
+                          </span>
+                          <ArrowRight size={18} aria-hidden="true" />
+                          <span>
+                            {date(b.capturedAt)} ·{" "}
+                            {
+                              b.scores.find(
+                                (s) =>
+                                  s.metricKey === metric &&
+                                  s.region === "whole",
+                              )?.rawScore
+                            }
+                          </span>
+                        </div>
+                      )}
                       <div className="comparison-head">
                         <div>
                           <div className="eyebrow">
                             {labels[metric]} · PROVIDER RAW SCORE
                           </div>
                           <div className="delta">
-                            {result.delta === null
-                              ? "—"
-                              : `${result.delta > 0 ? "+" : ""}${result.delta}`}
+                            <ScoreValue
+                              value={
+                                result.delta === null
+                                  ? "—"
+                                  : `${result.delta > 0 ? "+" : ""}${result.delta}`
+                              }
+                              active={result.comparable}
+                            />
                             <span>
                               {" "}
                               {result.delta === null
@@ -799,6 +866,9 @@ export default function WorkspaceApp({
                             "dermaloop-motion",
                             e.target.checked ? "reduced" : "default",
                           );
+                          window.dispatchEvent(
+                            new Event("dermaloop-preferences"),
+                          );
                         }}
                       />{" "}
                       Reduce motion
@@ -812,6 +882,9 @@ export default function WorkspaceApp({
                           localStorage.setItem(
                             "dermaloop-contrast",
                             e.target.checked ? "high" : "default",
+                          );
+                          window.dispatchEvent(
+                            new Event("dermaloop-preferences"),
                           );
                         }}
                       />{" "}
@@ -901,6 +974,7 @@ function RoutineLab({
   update: (w: Workspace) => Promise<boolean>;
 }) {
   const [open, setOpen] = useState(false);
+  const [saved, setSaved] = useState("");
   const [notes, setNotes] = useState<Record<string, string>>({});
   return (
     <>
@@ -914,9 +988,16 @@ function RoutineLab({
           {open ? "Close form" : "Log a routine change"}
         </button>
       </div>
+      {saved && (
+        <p className="save-note" role="status">
+          <Check size={14} />
+          {saved}
+        </p>
+      )}
       {open && (
         <form
           className="panel form-grid"
+          data-reveal="journal"
           onSubmit={async (e) => {
             e.preventDefault();
             const d = new FormData(e.currentTarget);
@@ -934,8 +1015,10 @@ function RoutineLab({
               startScan: w.scans.at(-1)?.id,
               observations: [],
             };
-            if (await update({ ...w, routines: [...w.routines, r] }))
+            if (await update({ ...w, routines: [...w.routines, r] })) {
               setOpen(false);
+              setSaved("Experiment saved in this browser.");
+            }
           }}
         >
           <label>
@@ -996,7 +1079,11 @@ function RoutineLab({
         </section>
       )}
       {w.routines.map((r) => (
-        <article className="routine-card panel" key={r.id}>
+        <article
+          className="routine-card panel"
+          key={r.id}
+          data-reveal="journal"
+        >
           <div className="panel-heading">
             <span className="tag">
               {r.category} ·{" "}
@@ -1005,92 +1092,100 @@ function RoutineLab({
             <span className="eyebrow">SINCE {r.startDate}</span>
           </div>
           <h2>{r.label}</h2>
-          <div className="routine-content">
-            <div>
-              <span className="eyebrow">THE ROUTINE</span>
-              <ul>
-                {r.products.map((p, i) => (
-                  <li key={i}>{p}</li>
-                ))}
-              </ul>
-              <p>{r.notes}</p>
-              <div className="checkpoint">
-                Next checkpoint <b>{r.checkpoint}</b>{" "}
-                <span>In-app reminder only</span>
-              </div>
-              {r.startScan && (
-                <Link
-                  href={`/app/timeline?from=${encodeURIComponent(r.startScan)}&to=${encodeURIComponent(w.scans.at(-1)?.id || r.startScan)}`}
-                >
-                  Review associated readings ↗
-                </Link>
-              )}
-            </div>
-            <div>
-              <span className="eyebrow">OBSERVATION JOURNAL</span>
-              {r.observations.map((o, i) => (
-                <div className="observation" key={i}>
-                  <small>{o.date}</small>
-                  <p>{o.note}</p>
+          <details open className="journal-fold">
+            <summary>Review routine & observations</summary>
+            <div className="routine-content">
+              <div>
+                <span className="eyebrow">THE ROUTINE</span>
+                <ul>
+                  {r.products.map((p, i) => (
+                    <li key={i}>{p}</li>
+                  ))}
+                </ul>
+                <p>{r.notes}</p>
+                <div className="checkpoint">
+                  Next checkpoint <b>{r.checkpoint}</b>{" "}
+                  <span>In-app reminder only</span>
                 </div>
-              ))}
-              <form
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  const saved = await update({
-                    ...w,
-                    routines: w.routines.map((v) =>
-                      v.id === r.id
-                        ? {
-                            ...v,
-                            observations: [
-                              ...v.observations,
-                              {
-                                date: new Date().toISOString().slice(0, 10),
-                                note: notes[r.id] || "",
-                              },
-                            ],
-                          }
-                        : v,
-                    ),
-                  });
-                  if (saved)
-                    setNotes((current) => ({ ...current, [r.id]: "" }));
-                }}
-              >
-                <label>
-                  Add a dated observation
-                  <textarea
-                    required
-                    maxLength={2000}
-                    value={notes[r.id] || ""}
-                    onChange={(e) =>
-                      setNotes((current) => ({
-                        ...current,
-                        [r.id]: e.target.value,
-                      }))
+                {r.startScan && (
+                  <Link
+                    href={`/app/timeline?from=${encodeURIComponent(r.startScan)}&to=${encodeURIComponent(w.scans.at(-1)?.id || r.startScan)}`}
+                  >
+                    Review associated readings ↗
+                  </Link>
+                )}
+              </div>
+              <div>
+                <span className="eyebrow">OBSERVATION JOURNAL</span>
+                {r.observations.map((o, i) => (
+                  <div className="observation" key={i}>
+                    <small>{o.date}</small>
+                    <p>{o.note}</p>
+                  </div>
+                ))}
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const saved = await update({
+                      ...w,
+                      routines: w.routines.map((v) =>
+                        v.id === r.id
+                          ? {
+                              ...v,
+                              observations: [
+                                ...v.observations,
+                                {
+                                  date: new Date().toISOString().slice(0, 10),
+                                  note: notes[r.id] || "",
+                                },
+                              ],
+                            }
+                          : v,
+                      ),
+                    });
+                    if (saved) {
+                      setNotes((current) => ({ ...current, [r.id]: "" }));
+                      setSaved("Observation saved in this browser.");
                     }
-                    placeholder="What changed? What stayed the same?"
-                  />
-                </label>
-                <button className="button secondary" type="submit">
-                  Save observation
-                </button>
-              </form>
+                  }}
+                >
+                  <label>
+                    Add a dated observation
+                    <textarea
+                      required
+                      maxLength={2000}
+                      value={notes[r.id] || ""}
+                      onChange={(e) =>
+                        setNotes((current) => ({
+                          ...current,
+                          [r.id]: e.target.value,
+                        }))
+                      }
+                      placeholder="What changed? What stayed the same?"
+                    />
+                  </label>
+                  <button className="button secondary" type="submit">
+                    Save observation
+                  </button>
+                </form>
+              </div>
             </div>
-          </div>
+          </details>
           <div className="routine-bottom">
             <span>
               Keep observing. External factors can influence any reading.
             </span>
             <button
               className="plain"
-              onClick={() =>
-                update({
-                  ...w,
-                  routines: w.routines.filter((v) => v.id !== r.id),
-                })
-              }
+              onClick={async () => {
+                if (
+                  await update({
+                    ...w,
+                    routines: w.routines.filter((v) => v.id !== r.id),
+                  })
+                )
+                  setSaved("Experiment removed from this browser.");
+              }}
             >
               Remove experiment
             </button>
@@ -1107,20 +1202,30 @@ function DecisionStudio({
   w: Workspace;
   update: (w: Workspace) => Promise<boolean>;
 }) {
+  const [validation, setValidation] = useState("");
+  const [saved, setSaved] = useState("");
+  const question = useRef<HTMLTextAreaElement>(null);
   return (
     <div className="decision-grid">
       <form
-        className="panel"
+        className="panel decision-form"
+        noValidate
         onSubmit={async (e) => {
           e.preventDefault();
           const f = new FormData(e.currentTarget);
+          if (!String(f.get("question") || "").trim()) {
+            setValidation("Write a question to open a decision note.");
+            question.current?.focus();
+            return;
+          }
+          setValidation("");
           const d = decide(
             String(f.get("question")),
             String(f.get("goal")),
             w.scans,
             w.routines,
           );
-          await update({
+          const stored = await update({
             ...w,
             decisions: [
               ...w.decisions,
@@ -1131,6 +1236,8 @@ function DecisionStudio({
               },
             ],
           });
+          if (stored)
+            setSaved("Decision note saved with its reasoning and evidence.");
         }}
       >
         <div className="eyebrow">BEFORE YOU ADD TO CART</div>
@@ -1139,6 +1246,12 @@ function DecisionStudio({
           Your proposed purchase or plan
           <textarea
             name="question"
+            ref={question}
+            aria-invalid={!!validation}
+            aria-describedby={validation ? "decision-validation" : undefined}
+            onChange={() => {
+              if (validation) setValidation("");
+            }}
             required
             maxLength={500}
             placeholder="Should I try a new moisturizer?"
@@ -1158,6 +1271,16 @@ function DecisionStudio({
           We look at compatible readings, capture conditions and routine
           changes. No affiliate links. No product rankings.
         </p>
+        {validation && (
+          <p id="decision-validation" role="alert" className="error">
+            {validation}
+          </p>
+        )}
+        {saved && (
+          <p role="status" className="save-note">
+            {saved}
+          </p>
+        )}
         <button type="submit" className="button">
           Find some perspective <ArrowRight size={16} />
         </button>
@@ -1181,7 +1304,14 @@ function DecisionStudio({
             .slice()
             .reverse()
             .map((d) => (
-              <article className="decision-card" key={d.id}>
+              <article
+                className="decision-card"
+                key={d.id}
+                data-reveal="decision"
+              >
+                <span className="closing-loop">
+                  <Mark />
+                </span>
                 <span className="tag">
                   {w.namespace === "demo_fixture"
                     ? "SAMPLE NOTEBOOK"
@@ -1354,12 +1484,18 @@ function ScanStudio({ onScan }: { onScan: (scan: SkinScan) => Promise<void> }) {
         <div className="eyebrow">SCAN STUDIO / PRIVATE ADAPTER REVIEW</div>
         <div className="demo-banner">
           <span>
-            Public live scanning is disabled. Photo preparation below stays
-            local; public submissions are blocked.
+            Live AI integration verified. Public scans are currently disabled.
+            Explore the genuine test results or try the complete fictional
+            sample journey.
           </span>
-          <Link className="text-link" href="/verification">
-            View the verified synthetic test ↗
-          </Link>
+          <div className="scan-demo-links">
+            <Link className="text-link" href="/verification">
+              View the verified synthetic test ↗
+            </Link>
+            <Link className="text-link" href="/app?sample=1">
+              Try the fictional sample journey ↗
+            </Link>
+          </div>
         </div>
         {complete ? (
           <>

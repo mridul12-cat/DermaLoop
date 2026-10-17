@@ -51,8 +51,16 @@ export default function Verification() {
               <span className="tag">ONE READING</span>
             </div>
             <div className="verified-metrics">
-              {baseline.metrics.map((row) => (
-                <article key={row.action}>
+              {baseline.metrics.map((row, index) => (
+                <article
+                  key={row.action}
+                  data-reveal="measurement"
+                  style={
+                    {
+                      "--enter-delay": `${index * 60}ms`,
+                    } as React.CSSProperties
+                  }
+                >
                   <h2>{names[row.action]}</h2>
                   <div className="score-pair">
                     <div>
@@ -111,7 +119,7 @@ export default function Verification() {
               <br />
               <em>provider loop.</em>
             </h2>
-            <ol>
+            <ol className="verified-workflow">
               <li>File registration: HTTP 200</li>
               <li>Signed JPEG upload: HTTP 200</li>
               <li>V2.1 task creation: HTTP 200</li>
